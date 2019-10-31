@@ -1,0 +1,149 @@
+Christopher Sims
+
+--1.0 Setting up Oracle Chinook
+-- In this section you will begin the process of working with the Oracle Chinook database
+-- Task – Open the Chinook_Oracle.sql file and execute the scripts within.
+-- 2.0 SQL Queries
+-- In this section you will be performing various queries against the Oracle Chinook database.
+-- 2.1 SELECT
+-- Task – Select all records from the Employee table.
+Select * FROM employee;
+
+-- Task – Select all records from the Employee table where last name is King.
+SELECT * FROM employee 
+WHERE lastname = 'King';
+
+-- Task – Select all records from the Employee table where first name is Andrew and REPORTSTO is NULL.
+SELECT * FROM employee 
+WHERE firstname = 'Andrew' 
+AND 'reportsto' IS NULL;
+
+-- 2.2 ORDER BY
+-- Task – Select all albums in Album table and sort result set in descending order by title.
+Select * FROM album
+ORDER BY)title DESC;
+
+-- Task – Select first name from Customer and sort result set in ascending order by city
+-- 2.3 INSERT INTO
+-- Task – Insert two new records into Genre table
+INSERT INTO genre (GenreId, Name) VALUES (26, 'Trap');
+
+INSERT INTO genre (GenreId, Name) VALUES (27, 'Mumble Rap');
+
+-- Task – Insert two new records into Employee table
+INSERT INTO employee (EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email)
+VALUES(9, 'Pie', 'Chrissy', 'IT Manager', 1, TO_DATE('1985-9-14 00:00:00', 'yyyy-mm-dd hh24:mi:ss'), TO_DATE('2003-8-4 00:00:00', 'yyyy-mm-dd hh24:mi:ss'), '221 Yourhouse Drive', 'Fayetteville', 'NC', 'USA', '28303', '+1 (555) 555-5555', 'theman@chinookcorp.com');
+
+INSERT INTO employee (EmployeeId, LastName, FirstName, Title, ReportsTo, BirthDate, HireDate, Address, City, State, Country, PostalCode, Phone, Fax, Email)
+VALUES(9, 'Bear', 'Nellie', 'Sales Support Agent', 2, TO_DATE('1989-5-17 00:00:00', 'yyyy-mm-dd hh24:mi:ss'), TO_DATE('2005-9-10 00:00:00', 'yyyy-mm-dd hh24:mi:ss'), '359 Myhouse Lane', 'Fayetteville', 'NC', 'USA', '28301', '+1 (555) 555-5556', 'thewoman@chinookcorp.com');
+
+-- Task – Insert two new records into Customer table
+INSERT INTO customer (CustomerId, FirstName, LastName, Company, Address, City, State, Country, PostalCode, Phone, Fax, Email, SupportRepId)
+VALUES(60, 'Crystal', 'Hemmy', (null), '445 Nonya St', 'Greensboro', 'NC', 'USA', '27407', '+1 (555) 848-4554', (null), (null), 3);
+
+INSERT INTO customer (CustomerId, FirstName, LastName, Company, Address, City, State, Country, PostalCode, Phone, Fax, Email, SupportRepId)
+VALUES(60, 'Tasha', 'Mack', (null), '544 Nonya Blvd', 'Winston-Salem', 'NC', 'USA', '27122', '+1 (555) 848-4588', (null), (null), 3);
+
+
+-- 2.4 UPDATE
+-- Task – Update Aaron Mitchell in Customer table to Robert Walter
+UPDATE customer
+SET firstname = 'Robert', lastname = 'Walter'
+WHERE firstname = 'Aaron', lastname = 'Mitchell';
+
+-- Task – Update name of artist in the Artist table “Creedence Clearwater Revival” to “CCR”
+-- 2.5 LIKE
+UPDATE artist
+SET name = 'CCR'
+WHERE = 'Creedence Clearwater Revival';
+
+-- Task – Select all invoices with a billing address like “T%”
+SELECT * FROM invoice
+WHERE billingaddress LIKE('T%');
+
+-- 2.6 BETWEEN
+-- Task – Select all invoices that have a total between 15 and 50
+SELECT * FROM invoice
+WHERE total BETWEEN 15 AND 50;
+
+-- Task – Select all employees hired between 1st of June 2003 and 1st of March 2004
+SELECT * FROM employee
+WHERE hiredate
+BETWEEN TO_DATE('2003-6-1 00:00:00', '-mm-dd hh24:mi:ss') 
+AND TO_DATE('2004-3-1 00:00:00','yyyy-mm-dd hh24:mi:ss');
+
+-- 2.7 DELETE
+-- Task – Delete a record in Customer table where the name is Robert Walter (There may be constraints that rely on this, find out how to resolve them).
+
+
+-- 3.0 SQL Functions
+-- In this section you will be using the Oracle system functions, as well as your own functions, to perform various actions against the database
+-- 3.1 System Defined Functions
+-- Task – Create a function that returns the current time.
+SELECT TO_CHAR (SYSDATE, 'MM-DD-YYYY HH24:MI:SS') "NOW" 
+FROM DUAL;
+CREATE OR REPLACE FUNCTION get_current_time
+RETURN VARCHAR2
+IS
+cur_time VARCHAR2(20);
+BEGIN
+SELECT to_char(sysdate, 'HH24:MI:SS') "NOW" 
+INTO cur_time FROM dual;
+
+-- Task – create a function that returns the length of a mediatype from the mediatype table
+-- 3.2 System Defined Aggregate Functions
+-- Task – Create a function that returns the average total of all invoices
+-- Task – Create a function that returns the most expensive track
+-- 3.3 User Defined Scalar Functions
+-- Task – Create a function that returns the average price of invoiceline items in the invoiceline table
+-- 3.4 User Defined Table Valued Functions
+-- Task – Create a function that returns all employees who are born after 1968.
+-- 4.0 Stored Procedures
+--  In this section you will be creating and executing stored procedures. You will be creating various types of stored procedures that take input and output parameters.
+-- 4.1 Basic Stored Procedure
+-- Task – Create a stored procedure that selects the first and last names of all the employees.
+-- 4.2 Stored Procedure Input Parameters
+-- Task – Create a stored procedure that updates the personal information of an employee.
+-- Task – Create a stored procedure that returns the managers of an employee.
+-- 4.3 Stored Procedure Output Parameters
+-- Task – Create a stored procedure that returns the name and company of a customer.
+-- 6.0 Triggers
+-- In this section you will create various kinds of triggers that work when certain DML statements are executed on a table.
+-- 6.1 AFTER/FOR
+-- Task - Create an after insert trigger on the employee table fired after a new record is inserted into the table.
+-- Task – Create an after update trigger on the album table that fires after a row is inserted in the table
+-- Task – Create an after delete trigger on the customer table that fires after a row is deleted from the table.
+-- Task – Create a trigger that restricts the deletion of any invoice that is priced over 50 dollars.
+-- 7.0 JOINS
+-- In this section you will be working with combing various tables through the use of joins. You will work with outer, inner, right, left, cross, and self joins.
+-- 7.1 INNER
+-- Task – Create an inner join that joins customers and orders and specifies the name of the customer and the invoiceId.
+SELECT c.firstname, c.lastname, i.invoiceid 
+FROM customer c
+INNER JOIN invoice i ON(c.customerid = i.customerid);
+
+-- 7.2 OUTER
+-- Task – Create an outer join that joins the customer and invoice table, specifying the CustomerId, firstname, lastname, invoiceId, and total.
+SELECT c.customerid, c.firstname, c.lastname, i.invoiceid, i.total
+FROM customer c
+OUTER JOIN invoice i ON(c.customerid = i.customerid);
+
+-- 7.3 RIGHT
+-- Task – Create a right join that joins album and artist specifying artist name and title.
+SELECT a.name, ab.title FROM artist a
+RIGHT JOIN album ab ON (a.artistid = ab.artistid);
+
+-- 7.4 CROSS
+-- Task – Create a cross join that joins album and artist and sorts by artist name in ascending order.
+SELECT * FROM album
+CROSS JOIN artist a
+ORDER BY a.name ASC;
+
+-- 7.5 SELF
+-- Task – Perform a self-join on the employee table, joining on the reportsto column.
+SELECT * FROM employee e
+INNER JOIN employee r on (e.reportsto = r.employeeid);
+
+
+
+
